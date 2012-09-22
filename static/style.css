@@ -1,0 +1,104 @@
+body
+{
+	background-color: #FBFBFB;
+	padding: 0px;
+	margin: 0px;
+	font-family: 'Orienta', 'Open Sans', sans-serif;
+}
+
+label, input, button
+{
+	font-family: 'Source Sans Pro', 'Open Sans', sans-serif;
+}
+
+#header
+{
+	padding: 11px 18px;
+	background-color: #505050;
+	color: white;
+}
+
+#contents
+{
+	padding: 13px 18px;
+}
+
+h1
+{
+	margin: 0px;
+}
+
+#whois_form
+{
+	padding: 6px 18px;
+	background-color: #E3E3E3;
+	border: 2px solid #252525;
+	border-radius: 8px;
+}
+
+#whois_form label, input, button
+{
+	font-size: 22px;
+	color: #2D2D2D;
+}
+
+#whois_form label
+{
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+#whois_form button
+{
+	padding: 2px 12px;
+	margin-left: 10px;
+}
+
+#whois_form input
+{
+	padding: 3px 7px;
+	width: 400px;
+}
+
+h2
+{
+	margin-bottom: 4px;
+}
+
+table th, td
+{
+	text-align: left;
+	border: 1px solid #636363;
+	padding: 4px 9px;
+}
+
+table
+{
+	border-collapse: collapse;
+	border: 2px solid black;
+}
+
+#flashes
+{
+	list-style: none;
+	margin: 18px 13px 6px 18px;
+	border: 1px solid red;
+	padding: 6px 8px;
+	background-color: #FFBFBF;
+}
+
+#footer
+{
+	margin: 9px 18px;
+	background-color: #2F2F2F;
+	color: white;
+	padding: 8px 12px;
+	border: 1px solid black;
+	border-radius: 7px;
+	font-size: 13px;
+}
+
+#footer a
+{
+	color: #FFFB85;
+}
