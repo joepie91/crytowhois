@@ -1,4 +1,4 @@
-import subprocess, datetime, time
+import subprocess, datetime, time, sys
 
 try:
 	import json
@@ -35,6 +35,12 @@ def get_first(options):
 	else:
 		return options[0]
 
+def unicodedammit(input_string):
+	if isinstance(input_string, str):
+		return input_string.decode('utf-8')
+	else:
+		return input_string
+
 def whois(domain):
 	raw, result = pythonwhois.whois(domain)
 	
@@ -49,14 +55,14 @@ def whois(domain):
 		emails = result['emails']
 		nameservers = result['name_servers']
 		
-		return raw, {
-			'creation_date': creation_date,
-			'expiration_date': expiration_date,
-			'updated_date': updated_date,
-			'registrar': registrar,
-			'whois_server': whois_server,
-			'emails': emails,
-			'nameservers': nameservers
+		return unicodedammit(raw), {
+			'creation_date': unicodedammit(creation_date),
+			'expiration_date': unicodedammit(expiration_date),
+			'updated_date': unicodedammit(updated_date),
+			'registrar': unicodedammit(registrar),
+			'whois_server': unicodedammit(whois_server),
+			'emails': unicodedammit(emails),
+			'nameservers': unicodedammit(nameservers)
 		}
 
 @app.route('/', methods=["GET"])
@@ -114,7 +120,7 @@ def query_html(domain):
 	else:
 		retrieval_timestamp = datetime.datetime.fromtimestamp(int(retrieval_date))
 		
-		return render_template("result.tpl", domain=domain, retrieval_date=retrieval_timestamp.isoformat(), raw=unicode(raw), **result)
+		return render_template("result.tpl", domain=domain, retrieval_date=retrieval_timestamp.isoformat(), raw=raw, **result)
 
 
 @app.route('/query/json/<domain>', methods=["GET"])
