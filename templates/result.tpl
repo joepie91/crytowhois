@@ -1,7 +1,8 @@
 {% extends "base.tpl" %}
 {% block body %}
+	{% autoescape true %}
 	<div class="whois-results">
-		<h2>WHOIS results</h2>
+		<h2>WHOIS results for {{ domain }}</h2>
 		<table>
 			<tr>
 				<th>WHOIS record retrieval date:</th>
@@ -61,10 +62,9 @@
 		{% if raw != None %}
 			<h2>Raw WHOIS response</h2>
 <pre>
-{% autoescape true %}
 {{ raw }}
-{% endautoescape %}
 </pre>
 		{% endif %}
 	</div>
+	{% endautoescape %}
 {% endblock %}

@@ -74,9 +74,11 @@ def find_whois(domain):
 		
 		return (db_results['timestamp'], db_results['response'], raw)
 	else:
-		raw, result = whois(domain)
+		returned = whois(domain)
 		
-		if result is not None:
+		if returned is not None:
+			raw, result = returned
+			
 			db['responses'].insert({
 				'domain': domain,
 				'response': result,
@@ -86,7 +88,7 @@ def find_whois(domain):
 			
 			return (time.time(), result, raw)
 		else:
-			return (time.time(), None)
+			return (time.time(), None, None)
 
 @app.route('/query', methods=["POST"])
 def query():
@@ -120,9 +122,12 @@ def query_json(domain):
 	if domain is not None:
 		retrieval_date, result, raw = find_whois(domain)
 		
-		result['retrieval_date'] = int(retrieval_date)
-		
-		return json.dumps(result)
+		if result is not None:
+			result['retrieval_date'] = int(retrieval_date)
+			result['raw_response'] = raw
+			return json.dumps(result)
+		else:
+			return json.dumps(None)
 	else:
 		return json.dumps(None)
 
