@@ -114,7 +114,7 @@ def query_html(domain):
 	else:
 		retrieval_timestamp = datetime.datetime.fromtimestamp(int(retrieval_date))
 		
-		return render_template("result.tpl", domain=domain, retrieval_date=retrieval_timestamp.isoformat(), raw=raw, **result)
+		return render_template("result.tpl", domain=domain, retrieval_date=retrieval_timestamp.isoformat(), raw=unicode(raw), **result)
 
 
 @app.route('/query/json/<domain>', methods=["GET"])
