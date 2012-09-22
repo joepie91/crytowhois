@@ -36,7 +36,7 @@ def get_first(options):
 		return options[0]
 
 def whois(domain):
-	result = pythonwhois.whois(domain)
+	raw, result = pythonwhois.whois(domain)
 	
 	if result['creation_date'] is None and result['expiration_date'] is None and result['registrar'] is None and result['name_servers'] is None:
 		return None
@@ -49,7 +49,7 @@ def whois(domain):
 		emails = result['emails']
 		nameservers = result['name_servers']
 		
-		return {
+		return raw, {
 			'creation_date': creation_date,
 			'expiration_date': expiration_date,
 			'updated_date': updated_date,
@@ -69,13 +69,14 @@ def find_whois(domain):
 	if db_results is not None:
 		return (db_results['timestamp'], db_results['response'])
 	else:
-		result = whois(domain)
+		raw, result = whois(domain)
 		
 		if result is not None:
 			db['responses'].insert({
 				'domain': domain,
 				'response': result,
-				'timestamp': time.time()
+				'timestamp': time.time(),
+				'raw': raw
 			})
 			
 			return (time.time(), result)
