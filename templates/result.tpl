@@ -56,7 +56,15 @@
 			
 		</table>
 		<p>
-			Need JSON? Try <a href="/query/json/{{ domain }}">http://whois.cryto.net/query/json/{{ domain }}</a>
+			<strong>Need JSON?<strong> Try <a href="/query/json/{{ domain }}">http://whois.cryto.net/query/json/{{ domain }}</a>
 		</p>
+		{% if raw != None %}
+			<h2>Raw WHOIS response</h2>
+<pre>
+{% autoescape true %}
+{{ raw }}
+{% endautoescape %}
+</pre>
+		{% endif %}
 	</div>
 {% endblock %}

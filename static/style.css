@@ -102,3 +102,10 @@ table
 {
 	color: #FFFB85;
 }
+
+pre
+{
+	background-color: #DEDEDE;
+	border: 1px solid gray;
+	padding: 7px;
+}

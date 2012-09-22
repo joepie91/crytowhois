@@ -67,7 +67,12 @@ def find_whois(domain):
 	db_results = db['responses'].find_one({'domain': domain})
 	
 	if db_results is not None:
-		return (db_results['timestamp'], db_results['response'])
+		try:
+			raw = db_results['raw']
+		except KeyError:
+			raw = None
+		
+		return (db_results['timestamp'], db_results['response'], raw)
 	else:
 		raw, result = whois(domain)
 		
@@ -79,7 +84,7 @@ def find_whois(domain):
 				'raw': raw
 			})
 			
-			return (time.time(), result)
+			return (time.time(), result, raw)
 		else:
 			return (time.time(), None)
 
@@ -99,20 +104,21 @@ def query():
 
 @app.route('/query/html/<domain>', methods=["GET"])
 def query_html(domain):
-	retrieval_date, result = find_whois(domain)
+	retrieval_date, result, raw = find_whois(domain)
 	
 	if result is None:
 		flash("The specified domain does not exist.")
 		return render_template("home.tpl"), 404
 	else:
 		retrieval_timestamp = datetime.datetime.fromtimestamp(int(retrieval_date))
-		return render_template("result.tpl", domain=domain, retrieval_date=retrieval_timestamp.isoformat(), **result)
+		
+		return render_template("result.tpl", domain=domain, retrieval_date=retrieval_timestamp.isoformat(), raw=raw, **result)
 
 
 @app.route('/query/json/<domain>', methods=["GET"])
 def query_json(domain):
 	if domain is not None:
-		retrieval_date, result = find_whois(domain)
+		retrieval_date, result, raw = find_whois(domain)
 		
 		result['retrieval_date'] = int(retrieval_date)
 		
